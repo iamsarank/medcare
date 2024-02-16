@@ -27,9 +27,8 @@ export const deleteDoctor = async (req, res) => {
 
 export const getSingleDoctor = async (req, res) => {
     const id = req.params.id
-
     try {
-        const doctor = await Doctor.findById(id).populate("review").select("-password")
+        const doctor = await Doctor.findById(id).populate("reviews").select("-password")
 
         res.status(200).json({ success: true, message: 'Doctor Found', data: doctor })
     } catch (err) {
@@ -64,10 +63,9 @@ export const getAllDoctor = async (req, res) => {
 }
 
 export const getDoctorProfile = async (req, res) => {
-    const doctorId = req.userId
-
+    const doctorId = req.userId;
     try {
-        const doctor = await Doctor.findId(doctorId )
+        const doctor = await Doctor.findById(doctorId)
 
         if (!doctor) {
             return res.status(404).json({ success: false, message: 'Doctor not found' })
